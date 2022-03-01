@@ -45,8 +45,8 @@ OS_REGION_NAME = ""
 
 # Connect to Openstack
 def cloud_connection(cloud_name):
-        file = f'/openrc/{cloud_name}'
-        #file = '/Users/papamica/kDrive/ProjetsPerso/kubernetes/openrc'
+        #file = f'/openrc/{cloud_name}'
+        file = '/Users/papamica/kDrive/ProjetsPerso/kubernetes/openrc'
         with open(file) as f:
             lines = f.readlines()
             for line in lines:
