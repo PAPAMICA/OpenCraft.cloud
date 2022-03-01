@@ -6,13 +6,13 @@ Le but : générer un diagrame avec une commande (ou depuis une interface web)  
 Inspiration : https://www.cloudcraft.co/
 
 ## Les informations à récupérer dans un premier temps :
- - Les instances
- - Les routeurs
- - Les ports
- - Les IPs
+ - Les instances ✅
+ - Les routeurs ✅
+ - Les ports ✅
+ - Les IPs ✅
  - Les sécurity groups
  - Les keypairs
- - Faire les interconnexions
+ - Faire les interconnexions ✅
  
 ## Les idées :
  - De beaux icones (3D?)
