@@ -181,6 +181,62 @@ def list_networks(cloud):
 
     return result
 
+
+# List routers
+def list_routers(cloud):
+    if arg_dict == 1:
+        result = {}
+    else:
+        result = ""
+    for router in cloud.network.routers():
+        if arg_dict == 1:
+            result[router.id] = router.name
+        elif arg_json == 1:
+            data = {router.id: router.name}
+            data = json.dumps(data, indent = 4)
+            result = result + data
+        else:
+            if (result == ""):
+                result = router.name
+            else:
+                result = result + ", " + router.name
+
+    return result
+
+def list_router_v2(cloud):
+    if arg_dict == 1:
+        result = {}
+    else:
+        result = ""
+    for router in cloud.network.routers():
+        for info in router.external_gateway_info:
+            if info == "external_fixed_ips":
+                for data in router.external_gateway_info[info]:
+                    router_ipwan = data['ip_address']
+            if info == "network_id":
+                router_network_wan = router.external_gateway_info[info]
+                router_network_wan = cloud.network.get_network(router_network_wan)
+                router_network_wan = router_network_wan.name
+        for port in list(cloud.network.ports(device_id=router.id)):
+            router_network_lan = cloud.network.get_network(port.network_id)
+            router_network_lan = router_network_lan.name
+            for data in port.fixed_ips:
+                router_iplan = data['ip_address']
+
+
+        if arg_dict == 1:
+            result[router.name] = {'id': router.id, 'status': router.status, 'ipwan': router_ipwan, 'network_wan': router_network_wan, 'iplan': router_iplan, 'network_lan': router_network_lan}
+        elif arg_json == 1:
+            data = {router.id: router.name}
+            data = json.dumps(data, indent = 4)
+            result = result + data
+        else:
+            if (result == ""):
+                result = router.name
+            else:
+                result = result + ", " + router.name
+    return result
+
 # List security groups
 def list_security_groups(cloud):
     if arg_dict == 1:
