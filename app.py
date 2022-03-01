@@ -11,8 +11,8 @@ from diagrams.custom import Custom
 
 
 cloud = oa.cloud_connection("prout")
-list = oa.get_instances_list(cloud)
-
+instances = oa.get_instances_list(cloud)
+networks = oa.list_networks(cloud)
 
 graph_attr = {
     "layout":"dot",
@@ -20,16 +20,24 @@ graph_attr = {
     "splines":"spline",
 }
 
-print(list)
+print(instances)
 with Diagram("\nInfrastructure", show=False, direction="TB", graph_attr=graph_attr,) as diag:
-    Internet = Internet("Internet")
-    with Cluster("Public Cloud Infomaniak"):
-        cluster = []
-        for instance in list:
-            instance = Custom(f"{instance} \n{list[instance]['IP']}", "./img/server.png")
-            cluster.append(instance)
-            print (cluster)
-    Internet >> cluster
+
+    # Instances
+    
+
+    for id, network in networks.items():
+        instances_net = []
+        for instance in instances:
+            # Instance per network
+            if (instances[instance]['Network'] == network):
+                instance = Custom(f"{instance} \n{instances[instance]['IP']}", "./img/server.png")
+                instances_net.append(instance)
+        if instances_net:
+            network_logo = Custom(f"{network}", "./img/network.png")
+            network_logo >> instances_net
+
+
 
 diag
 
