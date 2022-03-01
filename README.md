@@ -1,4 +1,4 @@
-# python-OpenStack-Diagram
+# OpenCraft.cloud
 Generate a diagram of your Openstack's project
 
 
