@@ -16,7 +16,7 @@ graph_attr = {
     "concentrate": "true",
     "splines": "spline",
 }
-with Diagram("\nInfrastructure", show=False, direction="TB", graph_attr=graph_attr,) as diag:
+with Diagram("\nInfrastructure", show=False, direction="TB", graph_attr=graph_attr, outformat=["png"]) as diag:
     for router in routers:
         networkwan = routers[router]['network_wan']
         img_router = Custom(
@@ -29,9 +29,13 @@ with Diagram("\nInfrastructure", show=False, direction="TB", graph_attr=graph_at
         for instance in instances:
             # Instance per network
             if (instances[instance]['Network'] == networklan):
-                instance = Custom(
-                    f"{instance} \n{instances[instance]['IP']}", "./img/server.png")
-                instances_net.append(instance)
+                sc = oa.list_sc_instance(cloud, instances[instance]['ID'])
+                for name in sc:
+                    sc = name
+                    with Cluster(f"{sc}"):
+                        sc_group = instance = Custom(
+                            f"{instance} \n{instances[instance]['IP']}", "./img/server.png")
+                instances_net.append(sc_group)
         if instances_net:
             img_network_wan >> img_router >> img_network_lan >> instances_net
 
@@ -39,9 +43,17 @@ with Diagram("\nInfrastructure", show=False, direction="TB", graph_attr=graph_at
     for instance in instances:
         # Instance per network
         if (instances[instance]['Network'] == "ext-net1"):
-            instance = Custom(
-                f"{instance} \n{instances[instance]['IP']}", "./img/server.png")
-            instances_net.append(instance)
+            sc = oa.list_sc_instance(cloud, instances[instance]['ID'])
+            scr = ""
+            for name in sc:
+                if (scr == ""):
+                    scr = name
+                else:
+                    scr = scr + ", " + name
+            with Cluster(f"{scr}"):
+                sc_group = instance = Custom(
+                    f"{instance} \n{instances[instance]['IP']}", "./img/server.png")
+            instances_net.append(sc_group)
     if instances_net:
         img_network_wan = Custom(f"ext-net1", "./img/internet.png")
         img_network_wan >> instances_net

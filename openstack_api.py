@@ -5,7 +5,7 @@ import openstack
 import openstack.exceptions
 import os
 import re
-import json 
+import json
 import argparse
 import subprocess
 import sys
@@ -29,7 +29,7 @@ arg_dict = 1
 instance_name = "test-name"
 instance_image = "Debian 11.2 bullseye"
 instance_flavor = "a1-ram2-disk20-perf1"
-instance_network= "ext-net1"
+instance_network = "ext-net1"
 instance_securitygroup = "ALLL"
 instance_keypair = "Yubikey"
 
@@ -37,34 +37,36 @@ instance_keypair = "Yubikey"
 cloud_name = "Infomaniak"
 keypair_name = ""
 
-OS_AUTH_URL = "" 
+OS_AUTH_URL = ""
 OS_PROJECT_NAME = ""
 OS_USERNAME = ""
 OS_PASSWORD = ""
 OS_REGION_NAME = ""
 
 # Connect to Openstack
+
+
 def cloud_connection(cloud_name):
-        #file = f'/openrc/{cloud_name}'
-        file = '/Users/papamica/kDrive/ProjetsPerso/kubernetes/openrc'
-        with open(file) as f:
-            lines = f.readlines()
-            for line in lines:
-                line=line.split()
-                if len(line) > 1:
-                    word=line[1].split('=')
-                    globals()[word[0]] = word[1]
-        return openstack.connect(
-            auth_url=OS_AUTH_URL,
-            project_name=OS_PROJECT_NAME,
-            username=OS_USERNAME,
-            password=OS_PASSWORD,
-            region_name=OS_REGION_NAME,
-            user_domain_name="default",
-            project_domain_name="default",
-            app_name='examples',
-            app_version='1.0',
-        )
+    #file = f'/openrc/{cloud_name}'
+    file = '/Users/papamica/kDrive/ProjetsPerso/kubernetes/openrc'
+    with open(file) as f:
+        lines = f.readlines()
+        for line in lines:
+            line = line.split()
+            if len(line) > 1:
+                word = line[1].split('=')
+                globals()[word[0]] = word[1]
+    return openstack.connect(
+        auth_url=OS_AUTH_URL,
+        project_name=OS_PROJECT_NAME,
+        username=OS_USERNAME,
+        password=OS_PASSWORD,
+        region_name=OS_REGION_NAME,
+        user_domain_name="default",
+        project_domain_name="default",
+        app_name='examples',
+        app_version='1.0',
+    )
 
 
 # Get all informations of all instances
@@ -74,7 +76,7 @@ def get_instances_list(cloud):
     else:
         result = ""
     for server in cloud.compute.servers():
-        #print(server)
+        # print(server)
         secgroup = ""
         for i in server.security_groups:
             if (secgroup == ""):
@@ -85,6 +87,7 @@ def get_instances_list(cloud):
         IPv4 = re.search(r'([0-9]{1,3}\.){3}[0-9]{1,3}', str(server.addresses))
         data = {'instance': server.name}
         data['Cloud'] = cloud_name
+        data['ID'] = server.id
         data['Status'] = server.status
         data['IP'] = IPv4.group()
         data['Keypair'] = server.key_name
@@ -95,13 +98,16 @@ def get_instances_list(cloud):
         if arg_dict == 1:
             result[server.name] = data
         elif arg_json == 1:
-            data = json.dumps(data, indent = 4)
+            data = json.dumps(data, indent=4)
             result = result + data
         else:
-            result = str(result) + f"{server.name}: \n  Cloud: {cloud_name}\n  Status: {server.status}\n  IP: {IPv4.group()}\n  Keypair: {server.key_name} \n  Image: {image.name}\n  Network: {next(iter(server.addresses))} \n  Flavor: {server.flavor['original_name']} \n  Security_groups: {secgroup} \n "
-    return result    
+            result = str(
+                result) + f"{server.name}: \n  Cloud: {cloud_name}\n  ID: {server.id}\n  Status: {server.status}\n  IP: {IPv4.group()}\n  Keypair: {server.key_name} \n  Image: {image.name}\n  Network: {next(iter(server.addresses))} \n  Flavor: {server.flavor['original_name']} \n  Security_groups: {secgroup} \n "
+    return result
 
 # Find and display information about one instance
+
+
 def get_instance_information(cloud, server_name):
     try:
         if arg_dict == 1:
@@ -130,10 +136,11 @@ def get_instance_information(cloud, server_name):
         if arg_dict == 1:
             result[server.name] = data
         elif arg_json == 1:
-            data = json.dumps(data, indent = 4)
+            data = json.dumps(data, indent=4)
             result = result + data
         else:
-            result = str(result) + f"{server.name}: \n  Cloud: {cloud_name}\n  Status: {server.status}\n  IP: {IPv4.group()}\n  Keypair: {server.key_name} \n  Image: {image.name}\n  Network: {next(iter(server.addresses))} \n  Flavor: {server.flavor['original_name']} \n  Security_groups: {secgroup} \n "
+            result = str(
+                result) + f"{server.name}: \n  Cloud: {cloud_name}\n  Status: {server.status}\n  IP: {IPv4.group()}\n  Keypair: {server.key_name} \n  Image: {image.name}\n  Network: {next(iter(server.addresses))} \n  Flavor: {server.flavor['original_name']} \n  Security_groups: {secgroup} \n "
         return result
     except:
         return (f"{server_name} not found !")
@@ -150,7 +157,7 @@ def list_keypairs(cloud):
             result[keypair.id] = keypair.name
         elif arg_json == 1:
             data = {keypair.id: keypair.name}
-            data = json.dumps(data, indent = 4)
+            data = json.dumps(data, indent=4)
             result = result + data
         else:
             if (result == ""):
@@ -161,6 +168,8 @@ def list_keypairs(cloud):
     return result
 
 # List networks
+
+
 def list_networks(cloud):
     if arg_dict == 1:
         result = {}
@@ -171,7 +180,7 @@ def list_networks(cloud):
             result[network.id] = network.name
         elif arg_json == 1:
             data = {network.id: network.name}
-            data = json.dumps(data, indent = 4)
+            data = json.dumps(data, indent=4)
             result = result + data
         else:
             if (result == ""):
@@ -193,7 +202,7 @@ def list_routers(cloud):
             result[router.id] = router.name
         elif arg_json == 1:
             data = {router.id: router.name}
-            data = json.dumps(data, indent = 4)
+            data = json.dumps(data, indent=4)
             result = result + data
         else:
             if (result == ""):
@@ -202,6 +211,7 @@ def list_routers(cloud):
                 result = result + ", " + router.name
 
     return result
+
 
 def list_router_v2(cloud):
     if arg_dict == 1:
@@ -215,7 +225,8 @@ def list_router_v2(cloud):
                     router_ipwan = data['ip_address']
             if info == "network_id":
                 router_network_wan = router.external_gateway_info[info]
-                router_network_wan = cloud.network.get_network(router_network_wan)
+                router_network_wan = cloud.network.get_network(
+                    router_network_wan)
                 router_network_wan = router_network_wan.name
         for port in list(cloud.network.ports(device_id=router.id)):
             router_network_lan = cloud.network.get_network(port.network_id)
@@ -223,12 +234,12 @@ def list_router_v2(cloud):
             for data in port.fixed_ips:
                 router_iplan = data['ip_address']
 
-
         if arg_dict == 1:
-            result[router.name] = {'id': router.id, 'status': router.status, 'ipwan': router_ipwan, 'network_wan': router_network_wan, 'iplan': router_iplan, 'network_lan': router_network_lan}
+            result[router.name] = {'id': router.id, 'status': router.status, 'ipwan': router_ipwan,
+                                   'network_wan': router_network_wan, 'iplan': router_iplan, 'network_lan': router_network_lan}
         elif arg_json == 1:
             data = {router.id: router.name}
-            data = json.dumps(data, indent = 4)
+            data = json.dumps(data, indent=4)
             result = result + data
         else:
             if (result == ""):
@@ -238,6 +249,8 @@ def list_router_v2(cloud):
     return result
 
 # List security groups
+
+
 def list_security_groups(cloud):
     if arg_dict == 1:
         result = {}
@@ -248,7 +261,7 @@ def list_security_groups(cloud):
             result[sc.id] = sc.name
         elif arg_json == 1:
             data = {sc.id: sc.name}
-            data = json.dumps(data, indent = 4)
+            data = json.dumps(data, indent=4)
             result = result + data
         else:
             if (result == ""):
@@ -258,7 +271,33 @@ def list_security_groups(cloud):
 
     return result
 
+
+# List security groups of an instance
+def list_sc_instance(cloud, instance):
+    if arg_dict == 1:
+        result = {}
+    else:
+        result = ""
+    scs = cloud.compute.fetch_server_security_groups(instance)
+    for item in scs['security_groups']:
+        sc_id = item['id']
+        sc_name = item['name']
+        if arg_dict == 1:
+            result[sc_name] = sc_id
+        elif arg_json == 1:
+            data = {sc_name: sc_id}
+            data = json.dumps(data, indent=4)
+            result = result + data
+        else:
+            if (result == ""):
+                result = sc_name
+            else:
+                result = result + ", " + sc_name
+    return result
+
 # List images
+
+
 def list_images(cloud):
     if arg_dict == 1:
         result = {}
@@ -269,7 +308,7 @@ def list_images(cloud):
             result[image.id] = image.name
         elif arg_json == 1:
             data = {image.id: image.name}
-            data = json.dumps(data, indent = 4)
+            data = json.dumps(data, indent=4)
             result = result + data
         else:
             if (result == ""):
@@ -291,7 +330,7 @@ def list_flavors(cloud):
             result[flavor.id] = flavor.name
         elif arg_json == 1:
             data = {flavor.id: flavor.name}
-            data = json.dumps(data, indent = 4)
+            data = json.dumps(data, indent=4)
             result = result + data
         else:
             if (result == ""):
@@ -300,4 +339,3 @@ def list_flavors(cloud):
                 result = result + ", " + flavor.name
 
     return result
-
