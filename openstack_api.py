@@ -76,13 +76,21 @@ def get_instances_list(cloud):
     else:
         result = ""
     for server in cloud.compute.servers():
-        # print(server)
+        #print(server)
         secgroup = ""
         for i in server.security_groups:
             if (secgroup == ""):
                 secgroup = i['name']
             else:
                 secgroup = secgroup + ", " + i['name']
+        metadata = server.metadata
+        servertag = list()
+        for tag in server.tags:
+            servertag.append(tag)
+        for meta in metadata:
+            if meta == "tags":
+                for tag in metadata["tags"].split(", "):
+                    servertag.append(tag)
         image = cloud.compute.find_image(server.image.id)
         IPv4 = re.search(r'([0-9]{1,3}\.){3}[0-9]{1,3}', str(server.addresses))
         data = {'instance': server.name}
@@ -92,6 +100,7 @@ def get_instances_list(cloud):
         data['IP'] = IPv4.group()
         data['Keypair'] = server.key_name
         data['Image'] = image.name
+        data['Tags'] = servertag
         data['Flavor'] = server.flavor['original_name']
         data['Network'] = next(iter(server.addresses))
         data['Security_groups'] = secgroup
@@ -102,7 +111,7 @@ def get_instances_list(cloud):
             result = result + data
         else:
             result = str(
-                result) + f"{server.name}: \n  Cloud: {cloud_name}\n  ID: {server.id}\n  Status: {server.status}\n  IP: {IPv4.group()}\n  Keypair: {server.key_name} \n  Image: {image.name}\n  Network: {next(iter(server.addresses))} \n  Flavor: {server.flavor['original_name']} \n  Security_groups: {secgroup} \n "
+                result) + f"{server.name}: \n  Cloud: {cloud_name}\n  ID: {server.id}\n  Status: {server.status}\n  IP: {IPv4.group()}\n  Keypair: {server.key_name} \n  Tags: {servertag} \n  Image: {image.name}\n  Network: {next(iter(server.addresses))} \n  Flavor: {server.flavor['original_name']} \n  Security_groups: {secgroup} \n "
     return result
 
 # Find and display information about one instance

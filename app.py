@@ -16,6 +16,10 @@ graph_attr = {
     "concentrate": "true",
     "splines": "spline",
 }
+tag_attr = {
+    "height": "4",
+    "width": "4",
+}
 with Diagram("\nInfrastructure", show=False, direction="TB", graph_attr=graph_attr, outformat=["png"]) as diag:
     for router in routers:
         networkwan = routers[router]['network_wan']
@@ -33,9 +37,17 @@ with Diagram("\nInfrastructure", show=False, direction="TB", graph_attr=graph_at
                 for name in sc:
                     sc = name
                     with Cluster(f"{sc}"):
-                        sc_group = instance = Custom(
-                            f"{instance} \n{instances[instance]['IP']}", "./img/server.png")
-                instances_net.append(sc_group)
+                        with Cluster(f"{instance}", direction="TB"):
+                            sc_group = img_instance = Custom(
+                                f"{instance} \n{instances[instance]['IP']}", "./img/server.png")
+
+                            for tag in instances[instance]['Tags']:
+                                if tag:
+                                    with Cluster(f"Tags"):
+                                        tags = img_tag = Custom(
+                                                f"", f"./img/technos/{tag}.png", height="0.7", width="0.7", imagescale="false")
+
+                    instances_net.append(sc_group)
         if instances_net:
             img_network_wan >> img_router >> img_network_lan >> instances_net
 
@@ -51,9 +63,19 @@ with Diagram("\nInfrastructure", show=False, direction="TB", graph_attr=graph_at
                 else:
                     scr = scr + ", " + name
             with Cluster(f"{scr}"):
-                sc_group = instance = Custom(
-                    f"{instance} \n{instances[instance]['IP']}", "./img/server.png")
+                with Cluster(f"{instance}", direction="TB"):
+                    sc_group = img_instance = Custom(
+                        f"{instance} \n{instances[instance]['IP']}", "./img/server.png")
+
+                    for tag in instances[instance]['Tags']:
+                        if tag:
+                            with Cluster(f"Tags"):
+                                tags = img_tag = Custom(
+                                        f"", f"./img/technos/{tag}.png", height="0.7", width="0.7", imagescale="false")
+
             instances_net.append(sc_group)
+
+            
     if instances_net:
         img_network_wan = Custom(f"ext-net1", "./img/internet.png")
         img_network_wan >> instances_net
