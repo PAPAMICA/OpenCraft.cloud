@@ -1,6 +1,10 @@
 # OpenCraft.cloud
 Generate a diagram of your Openstack's project
 
+# Requierements
+```
+pip install diagrams-0.18.0.tar.gz python-openstackclient
+```
 
 Le but : générer un diagrame avec une commande (ou depuis une interface web)  d'un projet OpenStack.
 Inspiration : https://www.cloudcraft.co/

@@ -1,2 +1,2 @@
 python-openstackclient
-diagrams
+diagrams==0.18.0
