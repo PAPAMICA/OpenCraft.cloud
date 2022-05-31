@@ -36,7 +36,6 @@ def get_instances_list(cloud):
     else:
         result = ""
     for server in cloud.compute.servers():
-        #print(server)
         secgroup = ""
         for i in server.security_groups:
             if (secgroup == ""):
@@ -52,16 +51,22 @@ def get_instances_list(cloud):
                 for tag in metadata["tags"].split(", "):
                     servertag.append(tag)
         image = cloud.compute.find_image(server.image.id)
-        IPv4 = re.search(r'([0-9]{1,3}\.){3}[0-9]{1,3}', str(server.addresses))
+        network = next(iter(server.addresses))
+        lenIP = len(server.addresses[f"{network}"])
+        i = 0
+        IPs = list()
+        while i < lenIP:
+            IPs.append(server.addresses[f"{network}"][i]['addr'])
+            i += 1
         data = {'instance': server.name}
         data['ID'] = server.id
         data['Status'] = server.status
-        data['IP'] = IPv4.group()
+        data['IP'] = IPs
         data['Keypair'] = server.key_name
         data['Image'] = image.name
         data['Tags'] = servertag
         data['Flavor'] = server.flavor['original_name']
-        data['Network'] = next(iter(server.addresses))
+        data['Network'] = network
         data['Security_groups'] = secgroup
         if arg_dict == 1:
             result[server.name] = data

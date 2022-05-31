@@ -53,7 +53,10 @@ with Diagram("\nInfrastructure", show=True, direction="TB", graph_attr=graph_att
                         else:
                             scr = scr + ", " + name
                     with Custom(f"Security Group : {scr}", "./img/firewall.png") as img_instance:
-                        with Custom(f"{instance}\n{instances[instance]['IP']}", "./img/server.png"):
+                        IPs = ""
+                        for i in instances[instance]['IP']:
+                            IPs = f"{IPs}\n{i}"
+                        with Custom(f"{instance}\n{IPs}", "./img/server.png"):
                             if args.tags == True:
                                 for tag in instances[instance]['Tags']:
                                     if tag:
