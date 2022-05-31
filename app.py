@@ -20,15 +20,11 @@ routers = oa.list_router_v2(cloud)
 
 graph_attr = {
     "layout": "dot",
-    "concentrate": "true",
-    "center": "true"
-}
-cluster_attr = {
-    "layout": "dot",
 }
 tag_attr = {
-    "height": "1",
-    "width": "1",
+    "center": "true",
+    "layout": "fdp",
+    "imagepos": "mc"
 }
 edge_attr = {
     "minlen":"2",
@@ -42,7 +38,8 @@ with Diagram("\nInfrastructure", show=True, direction="TB", graph_attr=graph_att
         networklan = routers[router]['network_lan']
 
         instances_net = []
-        with Custom(f"Network : {networklan}", "./img/network.png") as img_network:
+        with Custom(f"Network : {networklan}", "./img/network.png", direction="LR") as img_network:
+        #with Cluster(f"Network : {networklan}"):
             for instance in instances:
                 # Instance per network
                 if (instances[instance]['Network'] == networklan):
@@ -65,8 +62,8 @@ with Diagram("\nInfrastructure", show=True, direction="TB", graph_attr=graph_att
                                             tags = img_tag = Custom(
                                                     f"", f"./img/technos/{tag}.png")
 
+                    instances_net.append(img_instance)
 
-                instances_net.append(img_instance)
         if instances_net:
             img_network_wan >> img_router >> img_network
 
@@ -82,7 +79,10 @@ with Diagram("\nInfrastructure", show=True, direction="TB", graph_attr=graph_att
                 else:
                     scr = scr + ", " + name
             with Custom(f"Security Group : {scr}", "./img/firewall.png") as img_instance:
-                with Custom(f"{instance}\n{instances[instance]['IP']}", "./img/server.png"):
+                IPs = ""
+                for i in instances[instance]['IP']:
+                    IPs = f"{IPs}\n{i}"
+                with Custom(f"{instance}\n{IPs}", "./img/server.png"):
                     for tag in instances[instance]['Tags']:
                         if tag:
                             tags = img_tag = Custom(

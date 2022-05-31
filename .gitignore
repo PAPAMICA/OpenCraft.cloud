@@ -1,5 +1,5 @@
 # ignore PyCache
 __pycache__
 test.py
-openrc
+*openrc*
 infrastructure.png
