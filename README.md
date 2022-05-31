@@ -1,7 +1,7 @@
 # OpenCraft.cloud
 Generate a diagram of your Openstack's project
 
-# Requierements
+## Requierements
 ```
 pip install diagrams-0.18.0.tar.gz python-openstackclient
 ```
