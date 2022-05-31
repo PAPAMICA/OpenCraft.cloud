@@ -21,6 +21,7 @@ routers = oa.list_router_v2(cloud)
 graph_attr = {
     "layout": "dot",
     "concentrate": "true",
+    "center": "true"
 }
 cluster_attr = {
     "layout": "dot",
