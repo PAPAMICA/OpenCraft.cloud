@@ -10,63 +10,23 @@ import argparse
 import subprocess
 import sys
 
-parser = argparse.ArgumentParser()
-parser.add_argument("--json", help="Output as json", action="store_true")
-parser.add_argument("--dict", help="Output as dict", action="store_true")
-args = parser.parse_args()
-if args.json:
-    arg_json = 1
-else:
-    arg_json = 0
-
-if args.dict:
-    arg_dict = 1
-else:
-    arg_dict = 0
-
 arg_dict = 1
-# Instance
-instance_name = "test-name"
-instance_image = "Debian 11.2 bullseye"
-instance_flavor = "a1-ram2-disk20-perf1"
-instance_network = "ext-net1"
-instance_securitygroup = "ALLL"
-instance_keypair = "Yubikey"
-
-# Others
-cloud_name = "Infomaniak"
-keypair_name = ""
-
-OS_AUTH_URL = ""
-OS_PROJECT_NAME = ""
-OS_USERNAME = ""
-OS_PASSWORD = ""
-OS_REGION_NAME = ""
 
 # Connect to Openstack
-
-
-def cloud_connection(cloud_name):
-    #file = f'/openrc/{cloud_name}'
-    file = '/Users/papamica/kDrive/ProjetsPerso/kubernetes/openrc'
-    with open(file) as f:
-        lines = f.readlines()
-        for line in lines:
-            line = line.split()
-            if len(line) > 1:
-                word = line[1].split('=')
-                globals()[word[0]] = word[1]
-    return openstack.connect(
-        auth_url=OS_AUTH_URL,
-        project_name=OS_PROJECT_NAME,
-        username=OS_USERNAME,
-        password=OS_PASSWORD,
-        region_name=OS_REGION_NAME,
-        user_domain_name="default",
-        project_domain_name="default",
-        app_name='examples',
-        app_version='1.0',
-    )
+def cloud_connection(file):
+    parameters = {}
+    try:
+        with open(file) as f:
+            for line in f.readlines():
+                line=line.split()
+                if len(line) > 1:
+                    word=line[1].split('=')
+                    varname = word[0][3:].lower()
+                    parameters[varname]=word[1].strip("\"'")
+    except:
+        print("Provide a valide openrc file please.")
+        exit()
+    return openstack.connect(**parameters)
 
 
 # Get all informations of all instances
@@ -94,7 +54,6 @@ def get_instances_list(cloud):
         image = cloud.compute.find_image(server.image.id)
         IPv4 = re.search(r'([0-9]{1,3}\.){3}[0-9]{1,3}', str(server.addresses))
         data = {'instance': server.name}
-        data['Cloud'] = cloud_name
         data['ID'] = server.id
         data['Status'] = server.status
         data['IP'] = IPv4.group()
@@ -131,14 +90,22 @@ def get_instance_information(cloud, server_name):
                 secgroup = i['name']
             else:
                 secgroup = secgroup + ", " + i['name']
+        metadata = server.metadata
+        servertag = list()
+        for tag in server.tags:
+            servertag.append(tag)
+        for meta in metadata:
+            if meta == "tags":
+                for tag in metadata["tags"].split(", "):
+                    servertag.append(tag)
         image = cloud.compute.find_image(server.image.id)
         IPv4 = re.search(r'([0-9]{1,3}\.){3}[0-9]{1,3}', str(server.addresses))
         data = {'instance': server.name}
-        data['Cloud'] = cloud_name
         data['Status'] = server.status
         data['IP'] = IPv4.group()
         data['Keypair'] = server.key_name
         data['Image'] = image.name
+        data['Tags'] = servertag
         data['Flavor'] = server.flavor['original_name']
         data['Network'] = next(iter(server.addresses))
         data['Security_groups'] = secgroup
@@ -149,7 +116,7 @@ def get_instance_information(cloud, server_name):
             result = result + data
         else:
             result = str(
-                result) + f"{server.name}: \n  Cloud: {cloud_name}\n  Status: {server.status}\n  IP: {IPv4.group()}\n  Keypair: {server.key_name} \n  Image: {image.name}\n  Network: {next(iter(server.addresses))} \n  Flavor: {server.flavor['original_name']} \n  Security_groups: {secgroup} \n "
+                result) + f"{server.name}: \n  Cloud: {cloud_name}\n  Status: {server.status}\n  IP: {IPv4.group()}\n  Keypair: {server.key_name}\n  Tags: {servertag} \n  Image: {image.name}\n  Network: {next(iter(server.addresses))} \n  Flavor: {server.flavor['original_name']} \n  Security_groups: {secgroup} \n "
         return result
     except:
         return (f"{server_name} not found !")
