@@ -1,13 +1,15 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+from operator import truediv
 import openstack_api as oa
 from diagrams import Diagram, Cluster
 from diagrams.custom import Custom
 import argparse
 
 parser = argparse.ArgumentParser(description='Create a graph of your OpenStack project.')
-parser.add_argument("--openrc", required=True, help='Link to your openrc file')
+parser.add_argument("--openrc", required=True, help='Link to your openrc file.')
+parser.add_argument('--tags', action=argparse.BooleanOptionalAction, help='Show tags as pictures.')
 args = parser.parse_args()
 
 cloud = oa.cloud_connection(args.openrc)
@@ -51,10 +53,11 @@ with Diagram("\nInfrastructure", show=True, direction="TB") as diag:
                         scr = scr + ", " + name
                 with Custom(f"Security Group : {scr}", "./img/firewall.png") as img_instance:
                     with Custom(f"{instance}\n{instances[instance]['IP']}", "./img/server.png"):
-                        for tag in instances[instance]['Tags']:
-                            if tag:
-                                tags = img_tag = Custom(
-                                        f"", f"./img/technos/{tag}.png")
+                        if args.tags == True:
+                            for tag in instances[instance]['Tags']:
+                                if tag:
+                                    tags = img_tag = Custom(
+                                            f"", f"./img/technos/{tag}.png")
 
                 instances_net.append(img_instance)
         if instances_net:
