@@ -12,7 +12,7 @@ parser.add_argument("--network", required=False, help='Create a graph of one net
 args = parser.parse_args()
 
 graph_attr = {
-    "layout": "dot",
+    "layout": "neato",
     "concentrate":"true",
     "splines":"splines",
     "minlen":"2",
@@ -37,11 +37,10 @@ def create_diagram():
             img_container = Custom(
                 f"{container['Container']}\n IP : {container['IPv4']}", "./img/container.png")
             
-            groupe = f"{blank} >> {img_container}"
-            containers.append(groupe)
+            containers.append(img_container)
 
             
-        img_network >> containers
+        img_network >>  containers
 
        
     diag
