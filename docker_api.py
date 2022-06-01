@@ -10,7 +10,7 @@ client = docker.from_env()
 
 
 
-def get_instances_list():
+def get_containers_list():
     c_all = client.containers.list(all)
     allcontainers = list()
     for c in c_all:
