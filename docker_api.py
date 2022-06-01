@@ -124,8 +124,8 @@ def get_network_informations(network):
 
     # Containers
     containers = list()
-    container = dict()
     for i in n.attrs['Containers']: 
+        container = dict()
         container['Container'] = n.attrs['Containers'][i]['Name']
         container['IPv4'] = n.attrs['Containers'][i]['IPv4Address']
         containers.append(container)
