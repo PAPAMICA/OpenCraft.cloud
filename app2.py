@@ -33,68 +33,16 @@ elif args.network:
 
 def create_diagram():
     with Diagram("\nDocker infrastructure", show=True, direction="TB", graph_attr=graph_attr, node_attr=tag_attr,edge_attr=edge_attr) as diag:
-        for container in _network.Containers['Container']:
-            networkwan = routers[router]['network_wan']
-            img_router = Custom(
-                f"{router}\n WAN : {routers[router]['ipwan']} \n LAN : {routers[router]['iplan']}", "./img/router.png")
-            img_network_wan = Custom(f"{networkwan}", "./img/internet.png")
-            networklan = routers[router]['network_lan']
+        img_network = Custom(f"{args.network}\nSubnet: {_network[args.network]['Subnet']}", "./img/internet.png")
+        containers = []
+        for container in _network[args.network]['Containers']:
+            img_container = Custom(
+                f"{container['Container']}\n IP : {container['IPv4']}", "./img/container.png")
+            
+            containers.append(img_container)
 
-            instances_net = []
-            with Custom(f"Network : {networklan}", "./img/network.png", direction="LR") as img_network:
-            #with Cluster(f"Network : {networklan}"):
-                for instance in instances:
-                    # Instance per network
-                    if (instances[instance]['Network'] == networklan):
-                        sc = oa.list_sc_instance(cloud, instances[instance]['ID'])
-                        scr = ""
-                        for name in sc:
-                            if (scr == ""):
-                                scr = name
-                            else:
-                                scr = scr + ", " + name
-                        with Custom(f"Security Group : {scr}", "./img/firewall.png") as img_instance:
-                            IPs = ""
-                            for i in instances[instance]['IP']:
-                                IPs = f"{IPs}\n{i}"
-                            with Custom(f"{instance}\n{IPs}", "./img/server.png"):
-                                if args.tags == True:
-                                    for tag in instances[instance]['Tags']:
-                                        if tag:
-                                            if exists(f"./img/technos/{tag}.png"):
-                                                tags = img_tag = Custom(
-                                                        f"", f"./img/technos/{tag}.png")
+            
+        img_network >> img_container 
 
-                        instances_net.append(img_instance)
-
-            if instances_net:
-                img_network_wan >> img_router >> img_network
-
-        instances_net = []
-        for instance in instances:
-            # Instance per network
-            if (instances[instance]['Network'] == "ext-net1"):
-                sc = oa.list_sc_instance(cloud, instances[instance]['ID'])
-                scr = ""
-                for name in sc:
-                    if (scr == ""):
-                        scr = name
-                    else:
-                        scr = scr + ", " + name
-                with Custom(f"Security Group : {scr}", "./img/firewall.png") as img_instance:
-                    IPs = ""
-                    for i in instances[instance]['IP']:
-                        IPs = f"{IPs}\n{i}"
-                    with Custom(f"{instance}\n{IPs}", "./img/server.png"):
-                        for tag in instances[instance]['Tags']:
-                            if tag:
-                                tags = img_tag = Custom(
-                                        f"", f"./img/technos/{tag}.png")
-
-                instances_net.append(img_instance)
-
-                
-        if instances_net:
-            img_network_wan = Custom(f"ext-net1", "./img/internet.png")
-            img_network_wan >> instances_net
+       
     diag
