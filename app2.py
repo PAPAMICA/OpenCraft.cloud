@@ -36,7 +36,7 @@ def create_diagram():
             containers.append(img_container)
 
             
-        img_network >> img_container 
+        img_network >> containers
 
        
     diag
