@@ -29,7 +29,7 @@ tag_attr = {
 edge_attr = {
     "minlen":"2",
 }
-with Diagram("\nInfrastructure", show=True, direction="TB", graph_attr=graph_attr, node_attr=tag_attr,edge_attr=edge_attr) as diag:
+with Diagram("\nInfrastructure", show=True, direction="TB", outformat="pdf", graph_attr=graph_attr, node_attr=tag_attr,edge_attr=edge_attr) as diag:
     for router in routers:
         networkwan = routers[router]['network_wan']
         img_router = Custom(
@@ -38,8 +38,7 @@ with Diagram("\nInfrastructure", show=True, direction="TB", graph_attr=graph_att
         networklan = routers[router]['network_lan']
 
         instances_net = []
-        with Custom(f"Network : {networklan}", "./img/network.png", direction="LR") as img_network:
-        #with Cluster(f"Network : {networklan}"):
+        with Cluster(f"Network : {networklan}") as img_network:
             for instance in instances:
                 # Instance per network
                 if (instances[instance]['Network'] == networklan):
@@ -50,17 +49,12 @@ with Diagram("\nInfrastructure", show=True, direction="TB", graph_attr=graph_att
                             scr = name
                         else:
                             scr = scr + ", " + name
-                    with Custom(f"Security Group : {scr}", "./img/firewall.png") as img_instance:
+                    with Cluster(f"Security Group : {scr}") as img_instance:
                         IPs = ""
                         for i in instances[instance]['IP']:
                             IPs = f"{IPs}\n{i}"
-                        with Custom(f"{instance}\n{IPs}", "./img/server.png"):
-                            if args.tags == True:
-                                for tag in instances[instance]['Tags']:
-                                    if tag:
-                                        if exists(f"./img/technos/{tag}.png"):
-                                            tags = img_tag = Custom(
-                                                    f"", f"./img/technos/{tag}.png")
+                        icon_server = "./img/server.png"
+                        Custom(f"{instance}\n{IPs}", icon_server)
 
                     instances_net.append(img_instance)
 
