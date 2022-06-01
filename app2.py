@@ -45,7 +45,7 @@ def create_diagram():
                 containers.append(img_container)
 
             
-        img_network >> containers_cluster
+        img_network >> Edge(lhead=containers_cluster) >> containers
 
        
     diag
