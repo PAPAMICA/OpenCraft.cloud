@@ -28,8 +28,7 @@ if args.container:
 elif args.network:
     _network = docker.get_network_informations(args.network)
     for container in _network[args.network]['Containers']:
-        for i in container:
-            print(i.Container)
+        print(container.Container)
 
 
 def create_diagram():
