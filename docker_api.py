@@ -98,7 +98,7 @@ def get_networks_list():
     return result
 
 
-def get_network_information(network):
+def get_network_informations(network):
     try:
         n = client.networks.get(network)
     except:
