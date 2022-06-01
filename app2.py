@@ -12,7 +12,7 @@ parser.add_argument("--network", required=False, help='Create a graph of one net
 args = parser.parse_args()
 
 graph_attr = {
-    "layout": "dot",
+    "layout": "fdp",
     "concentrate":"true",
     "splines":"lines",
     "minlen":"4",
@@ -35,7 +35,7 @@ edge_attr = {
 def create_diagram():
     with Diagram("\nDocker infrastructure", show=False, direction="TB", graph_attr=graph_attr, node_attr=tag_attr,edge_attr=edge_attr) as diag:
         img_network = Custom(f"{args.network}\nSubnet: {_network[args.network]['Subnet']}", "./img/internet.png")
-        with Custom(f"Subnet: {_network[args.network]['Subnet']}", "./img/network.png", graph_attr=tag_attr, direction="LR") as containers_subnet:
+        with Custom(f"Subnet: {_network[args.network]['Subnet']}", "./img/network.png", direction="LR") as containers_subnet:
             containers = []
             for container in _network[args.network]['Containers']:
                 img_container = Custom(
