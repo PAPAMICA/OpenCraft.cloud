@@ -12,7 +12,7 @@ parser.add_argument("--network", required=False, help='Create a graph of one net
 args = parser.parse_args()
 
 graph_attr = {
-    "layout": "fdp",
+    "layout": "neato",
     "concentrate":"true",
     "splines":"lines",
     "minlen":"4",
