@@ -22,7 +22,7 @@ tag_attr = {
     "imagepos": "mc"
 }
 edge_attr = {
-    "minlen":"2",
+    "minlen":"3",
 }
 
 
