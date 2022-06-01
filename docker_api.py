@@ -2,9 +2,10 @@
 # -*- coding: utf-8 -*-
 import docker
 import json
+import argparse
 
 arg_dict = 1
-arg_json = 0
+
 
 client = docker.from_env()
 
@@ -147,3 +148,20 @@ def get_network_informations(network):
         result = str(result) + f"- {n.name} -\n Subnet: {subnet}\n Driver: {driver}\n Stack: {stack}\n Containers: {containers}"
     return result
     
+# Main application
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description='Create a graph of your Docker project.')
+    parser.add_argument("--container", required=False, help='Create a graph of one container')
+    parser.add_argument("--network", required=False, help='Create a graph of one network')
+    parser.add_argument("--json", required=False, help='Output as json')
+    args = parser.parse_args()
+    
+    if args.json:
+        arg_json = 1
+
+    if args.container:
+        print(get_container_informations(args.container))
+    elif args.network:
+        print(get_network_informations(args.network))
+    else:
+        print(f"Containers:\n{get_containers_list()}\n\nNetworks:\n{get_networks_list()}")
