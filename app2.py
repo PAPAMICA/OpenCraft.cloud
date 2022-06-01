@@ -14,7 +14,7 @@ args = parser.parse_args()
 graph_attr = {
     "layout": "dot",
     "concentrate":"true",
-    "splines":"ortho",
+    "splines":"polyline",
     "minlen":"3",
 }
 tag_attr = {
