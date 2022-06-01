@@ -12,10 +12,10 @@ parser.add_argument("--network", required=False, help='Create a graph of one net
 args = parser.parse_args()
 
 graph_attr = {
-    "layout": "circo",
+    "layout": "neato",
     "concentrate":"true",
     "splines":"lines",
-    "minlen":"4",
+    "len":"4",
 }
 
 cluster_attr = {
@@ -27,7 +27,7 @@ tag_attr = {
     "imagepos": "mc"
 }
 edge_attr = {
-    "minlen":"4",
+    "len":"4",
 }
 
 
