@@ -97,4 +97,4 @@ def create_diagram():
         if instances_net:
             img_network_wan = Custom(f"ext-net1", "./img/internet.png")
             img_network_wan >> instances_net
-diag
+    diag
