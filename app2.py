@@ -38,7 +38,7 @@ def create_diagram():
                 f"{container['Container']}\n IP : {container['IPv4']}", "./img/container.png")
             
             groupe = f"{blank} >> {img_container}"
-            containers.append(img_container)
+            containers.append(groupe)
 
             
         img_network >> containers
