@@ -122,8 +122,11 @@ def get_network_informations(network):
 
     # Containers
     containers = list()
+    container = dict()
     for i in n.attrs['Containers']: 
-        containers.append(n.attrs['Containers'][i]['Name'], n.attrs['Containers'][i]['IPv4Address'])
+        container['Container'] = n.attrs['Containers'][i]['Name']
+        container['IPv4'] = n.attrs['Containers'][i]['IPv4Address']
+        containers.append(container)
         
     data = {'network': network}
     data['Subnet'] = subnet
