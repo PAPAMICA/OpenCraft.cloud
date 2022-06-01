@@ -27,7 +27,7 @@ if args.container:
     print(docker.get_container_informations(args.container))
 elif args.network:
     _network = docker.get_network_informations(args.network)
-    for container in _network['Containers']['Container']:
+    for container in _network:
         print(container)
 
 
