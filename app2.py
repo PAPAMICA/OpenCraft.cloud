@@ -14,8 +14,8 @@ args = parser.parse_args()
 graph_attr = {
     "layout": "dot",
     "concentrate":"true",
-    "splines":"polyline",
-    "minlen":"3",
+    "splines":"splines",
+    "minlen":"2",
 }
 tag_attr = {
     "center": "true",
@@ -23,7 +23,7 @@ tag_attr = {
     "imagepos": "mc"
 }
 edge_attr = {
-    "minlen":"3",
+    "minlen":"2",
 }
 
 
@@ -37,10 +37,11 @@ def create_diagram():
             img_container = Custom(
                 f"{container['Container']}\n IP : {container['IPv4']}", "./img/container.png")
             
+            groupe = f"{blank} >> {img_container}"
             containers.append(img_container)
 
             
-        img_network >> blank >> containers
+        img_network >> containers
 
        
     diag
