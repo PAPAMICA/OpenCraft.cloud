@@ -23,7 +23,7 @@ def get_containers_list():
 
 
 def get_container_informations(container):
-    try
+    try:
         c = client.containers.get(container)
     except:
         return (f"ERROR: {container} doesn't exist !")
@@ -99,7 +99,7 @@ def get_networks_list():
 
 
 def get_network_information(network):
-    try
+    try:
         n = client.networks.get(network)
     except:
         return (f"ERROR: {network} doesn't exist !")
