@@ -11,4 +11,4 @@ args = parser.parse_args()
 if args.container:
     print(docker.get_container_informations(args.container))
 else:
-    print(docker.get_instances_list())
+    print(docker.get_containers_list())
