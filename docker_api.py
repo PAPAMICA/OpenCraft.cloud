@@ -23,7 +23,10 @@ def get_containers_list():
 
 
 def get_container_informations(container):
-    c = client.containers.get(container)
+    try
+        c = client.containers.get(container)
+    except:
+        return (f"ERROR: {container} doesn't exist !")
     # Status
     status = c.attrs['State']['Status']
 
@@ -96,7 +99,10 @@ def get_networks_list():
 
 
 def get_network_information(network):
-    n = client.containers.get(network)
+    try
+        n = client.networks.get(network)
+    except:
+        return (f"ERROR: {network} doesn't exist !")
 
     # Stack
     Labels = n.attrs['Labels']
