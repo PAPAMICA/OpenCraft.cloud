@@ -11,4 +11,4 @@ args = parser.parse_args()
 if args.container:
     print(docker.get_container_informations(args.container))
 else:
-    print(docker.get_containers_list())
+    print(f"Containers:\n{docker.get_containers_list()}\n\nNetworks:\n{docker.get_networks_list()}")
