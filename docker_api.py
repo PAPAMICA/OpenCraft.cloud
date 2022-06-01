@@ -159,6 +159,7 @@ if __name__ == '__main__':
     
     if args.json:
         arg_json = 1
+        arg_dict = 0
 
     if args.container:
         print(get_container_informations(args.container))
