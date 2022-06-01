@@ -3,7 +3,7 @@
 
 import docker_api as docker
 import argparse
-from diagrams import Diagram, Cluster, Node
+from diagrams import Diagram, Cluster, Node, Edge
 from diagrams.custom import Custom
 
 parser = argparse.ArgumentParser(description='Create a graph of your Docker project.')
@@ -45,7 +45,7 @@ def create_diagram():
                 containers.append(img_container)
 
             
-        img_network >> containers_cluster >> containers
+        img_network >> Edge(lhead='cluster_Containers') >> containers
 
        
     diag
