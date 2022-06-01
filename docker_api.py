@@ -68,7 +68,12 @@ def get_container_informations(container):
     data['IP'] = ipadress
     data['Ports'] = ports
     data['Image'] = image
- 
+    
+
+    if arg_dict == 1:
+        result = {}
+    else:
+        result = ""
     if arg_dict == 1:
         result[container] = data
     elif arg_json == 1:
@@ -113,6 +118,11 @@ def get_network_information(network):
     data['Subnet'] = subnet
     data['Stack'] = stack
     
+
+    if arg_dict == 1:
+        result = {}
+    else:
+        result = ""
     if arg_dict == 1:
         result[network] = data
     elif arg_json == 1:
