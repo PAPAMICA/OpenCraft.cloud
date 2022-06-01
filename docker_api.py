@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+from xmlrpc.client import Boolean
 import docker
 import json
 import argparse
@@ -153,7 +154,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Create a graph of your Docker project.')
     parser.add_argument("--container", required=False, help='Create a graph of one container')
     parser.add_argument("--network", required=False, help='Create a graph of one network')
-    parser.add_argument("--json", required=False, help='Output as json')
+    parser.add_argument("--json", action=argparse.BooleanOptionalAction, required=False, help='Output as json')
     args = parser.parse_args()
     
     if args.json:
