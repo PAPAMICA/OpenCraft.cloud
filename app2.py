@@ -14,8 +14,8 @@ args = parser.parse_args()
 graph_attr = {
     "layout": "neato",
     "concentrate":"true",
-    "splines":"splines",
-    "minlen":"2",
+    "splines":"lines",
+    "minlen":"4",
 }
 tag_attr = {
     "center": "true",
@@ -23,7 +23,7 @@ tag_attr = {
     "imagepos": "mc"
 }
 edge_attr = {
-    "minlen":"2",
+    "minlen":"4",
 }
 
 
