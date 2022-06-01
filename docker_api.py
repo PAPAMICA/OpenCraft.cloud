@@ -119,10 +119,16 @@ def get_network_informations(network):
         subnet = None
     else:
         subnet = n.attrs['IPAM']['Config'][0]['Subnet']
+
+    # Containers
+    containers = list()
+    for i in n.attrs['Containers']: 
+        containers.append(n.attrs['Containers'][i]['Name'], n.attrs['Containers'][i]['IPv4Address'])
         
     data = {'network': network}
     data['Subnet'] = subnet
     data['Stack'] = stack
+    data['Containers'] = containers
     
 
     if arg_dict == 1:
@@ -135,6 +141,6 @@ def get_network_informations(network):
         data = json.dumps(data, indent=4)
         result = result + data
     else:
-        result = str(result) + f"- {n.name} -\n Subnet: {subnet}\n Driver: {driver}\n Stack: {stack}"
+        result = str(result) + f"- {n.name} -\n Subnet: {subnet}\n Driver: {driver}\n Stack: {stack}\n Containers: {containers}"
     return result
     
