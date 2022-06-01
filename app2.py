@@ -17,6 +17,10 @@ graph_attr = {
     "splines":"lines",
     "minlen":"4",
 }
+
+cluster_attr = {
+    "layout": "fdp",
+}
 tag_attr = {
     "center": "true",
     "layout": "fdp",
@@ -31,7 +35,7 @@ edge_attr = {
 def create_diagram():
     with Diagram("\nDocker infrastructure", show=False, direction="TB", graph_attr=graph_attr, node_attr=tag_attr,edge_attr=edge_attr) as diag:
         blank = Node("", shape="plaintext", height="0.0", width="0.0")
-        with Cluster("Containers") as containers_cluster:
+        with Cluster("Containers", graph_attr=cluster_attr) as containers_cluster:
             img_network = Custom(f"{args.network}\nSubnet: {_network[args.network]['Subnet']}", "./img/internet.png")
             containers = []
             for container in _network[args.network]['Containers']:
@@ -41,7 +45,7 @@ def create_diagram():
                 containers.append(img_container)
 
             
-        img_network >> containers_cluster
+        img_network >> containers_cluster >> containers
 
        
     diag
