@@ -3,4 +3,5 @@
 
 import docker_api as docker
 
-print(docker.get_instances_list)
+containers = docker.get_instances_list()
+print(containers)
