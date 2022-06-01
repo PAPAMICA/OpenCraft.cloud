@@ -13,8 +13,8 @@ args = parser.parse_args()
 
 graph_attr = {
     "layout": "dot",
-    "concentrate": "true",
-    "spline": "spline"
+    "concentrate":"true",
+    "splines":"spline",
 }
 tag_attr = {
     "center": "true",
@@ -28,7 +28,7 @@ edge_attr = {
 
 
 def create_diagram():
-    with Diagram("\nDocker infrastructure", show=True, direction="TB", graph_attr=graph_attr, node_attr=tag_attr,edge_attr=edge_attr) as diag:
+    with Diagram("\nDocker infrastructure", show=False, direction="TB", graph_attr=graph_attr, node_attr=tag_attr,edge_attr=edge_attr) as diag:
         img_network = Custom(f"{args.network}\nSubnet: {_network[args.network]['Subnet']}", "./img/internet.png")
         containers = []
         for container in _network[args.network]['Containers']:
