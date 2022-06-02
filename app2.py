@@ -81,7 +81,7 @@ def list_network(network):
         print(_container)
         file = 'test2.csv'
         fields = list()
-        _name = _container[0]['container']
+        _name = _container[container['Container']]['container']
         _type = "container"
         _ip = _container['IP']
         _fill = "#dae8fc"
