@@ -60,35 +60,29 @@ def list_containers(network, file):
         containers =  _network[network]['Containers']
     else:
         containers = docker.get_containers_list()
+        print(containers)
     for container in containers:
         if network != "":
             _container = docker.get_container_informations(container['Container'])
             _name = container['Container']
-            _ip = " ".join(_container[_name]['IP'])
-            if _container[_name]['Status'] == "running":
-                _fill = "#d5e8d4"
-                _stroke = "#82b366"
-            else:
-                _fill = "#f8cecc"
-                _stroke = "#b85450"
-            _refs = ",".join(_container[_name]['Network'])
         else:
             _container = docker.get_container_informations(container)
-            print(_container)
             _name = container
-            _ip = " ".join(_container['IP'])
-            if _container['Status'] == "running":
-                _fill = "#d5e8d4"
-                _stroke = "#82b366"
-            else:
-                _fill = "#f8cecc"
-                _stroke = "#b85450"
-            _refs = ",".join(_container['Network'])
 
         fields = list()
         _type = "container"
         _option = "-"
         _note = "Port: 1234/TCP"
+
+        if _container[_name]['Status'] == "running":
+            _fill = "#d5e8d4"
+            _stroke = "#82b366"
+        else:
+            _fill = "#f8cecc"
+            _stroke = "#b85450"
+
+        
+        _refs = ",".join(_container[_name]['Network'])
         _image = "https://send.papamica.fr/f.php?h=36z5CCnq&p=1"
         fields.extend((_name, _type, _option, _ip, _note, _fill, _stroke, _refs, _image))
         add_csv_line(file, fields)
