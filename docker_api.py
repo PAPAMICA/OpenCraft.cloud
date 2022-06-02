@@ -65,7 +65,8 @@ def get_container_informations(container):
     image = c.attrs['Config']['Image']
             
     # IPadress
-    ipadress = c.attrs['NetworkSettings']['Networks'][network]['IPAddress']
+    for _network in network:
+        ipadress = c.attrs['NetworkSettings']['Networks'][_network]['IPAddress']
 
     data = {'container': container}
     data['Status'] = status
