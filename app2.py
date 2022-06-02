@@ -3,8 +3,6 @@
 
 import docker_api as docker
 import argparse
-import json
-import encode
 import csv
 from diagrams import Diagram, Cluster, Node, Edge
 from diagrams.custom import Custom
