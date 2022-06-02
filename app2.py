@@ -57,15 +57,13 @@ def add_csv_line(file, fields):
         writer.writerow(fields)
 
 def delete_duplicate_line(file):
-    with open(file, 'rb') as fin, open('export.csv', 'wb') as fout:
-        reader = csv.reader(fin)
-        writer = csv.writer(fout)
-        d = {}
-        for row in reader:
-            color = row[0]
-            if color not in d:
-                d[color] = row  
-                writer.writerow(row)
+    with open('file', 'r') as in_file, open('export.csv', 'w') as out_file:
+        seen = set() # set for fast O(1) amortized lookup
+        for line in in_file:
+            if line in seen: continue # skip duplicate
+
+            seen.add(line)
+            out_file.write(line)
    
 
 def list_network(network, file):
