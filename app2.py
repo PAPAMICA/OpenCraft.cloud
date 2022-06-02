@@ -13,6 +13,8 @@ parser.add_argument("--container", required=False, help='Create a graph of one c
 parser.add_argument("--network", required=False, help='Create a graph of one network')
 args = parser.parse_args()
 
+blacklist_networks = ["bridge","host","none"]
+
 graph_attr = {
     "layout": "dot",
     "concentrate":"true",
@@ -104,6 +106,8 @@ def list_network(network, file):
 
 def list_all(file):
     _networks = docker.get_networks_list()
+    for blacklist in blacklist_networks:
+        _networks.remove(blacklist)
     for _network in _networks:
         list_network(_network, file)
 
