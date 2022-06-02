@@ -81,27 +81,36 @@ def list_network(network, file):
     _type = "network"
     _option = ""
     _ip = _network[network]['Subnet']
-    _fill = "#f8cecc"
-    _stroke = "#b85450"
+    _note = "TEST"
+    _fill = "#dae8fc"
+    _stroke = "#6c8ebf"
     _refs = _network[network]['Driver']
     _image = "https://send.papamica.fr/f.php?h=0f3ZrzyN&p=1"
-    fields.extend((_name, _type, _option, _ip, _fill, _stroke, _refs, _image))
+    fields.extend((_name, _type, _option, _ip, _note, _fill, _stroke, _refs, _image))
     
     add_csv_line(file, fields)
 
     for container in _network[network]['Containers']:
         _container = docker.get_container_informations(container['Container'])
-        file = 'test2.csv'
+
         fields = list()
         _name = container['Container']
         _type = "container"
         _option = "-"
         _ip = " ".join(_container[_name]['IP'])
-        _fill = "#dae8fc"
-        _stroke = "#6c8ebf"
+        _note = "Port: 1234/TCP"
+
+        if _container[_name]['Status'] == "running":
+            _fill = "#d5e8d4"
+            _stroke = "#82b366"
+        else:
+            _fill = "#f8cecc"
+            _stroke = "#b85450"
+
+        
         _refs = ",".join(_container[_name]['Network'])
         _image = "https://send.papamica.fr/f.php?h=36z5CCnq&p=1"
-        fields.extend((_name, _type, _option, _ip, _fill, _stroke, _refs, _image))
+        fields.extend((_name, _type, _option, _ip, _note, _fill, _stroke, _refs, _image))
         add_csv_line(file, fields)
 
 def list_all(file):
