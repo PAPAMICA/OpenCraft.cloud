@@ -72,6 +72,7 @@ def list_containers(network, file):
         fields = list()
         _type = "container"
         _option = "-"
+        _ip = " ".join(_container[_name]['IP'])
         _note = "Port: 1234/TCP"
 
         if _container[_name]['Status'] == "running":
