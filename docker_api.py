@@ -103,8 +103,8 @@ def get_networks_list():
 def get_network_informations(network):
     try:
         n = client.networks.get(network)
-    except:
-        return (f"ERROR: {network} doesn't exist !")
+    except Exception as err:
+        return err
 
     # Stack
     Labels = n.attrs['Labels']
