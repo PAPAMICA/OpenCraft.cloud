@@ -57,7 +57,7 @@ def add_csv_line(file, fields):
         writer.writerow(fields)
 
 def delete_duplicate_line(file):
-    with open(file, 'rb') as fin, open(file, 'wb') as fout:
+    with open(file, 'rb') as fin, open('export.csv', 'wb') as fout:
         reader = csv.reader(fin)
         writer = csv.writer(fout)
         d = {}
