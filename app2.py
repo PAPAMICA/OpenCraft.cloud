@@ -44,12 +44,13 @@ def list_network(network, file):
     _type = "network"
     _option = ""
     _ip = _network[network]['Subnet']
-    _note = "TEST\\nCoucou"
+    _image = ""
+    _note = ""
     _fill = "#dae8fc"
     _stroke = "#6c8ebf"
     _refs = _network[network]['Driver']
     _image = "https://send.papamica.fr/f.php?h=0f3ZrzyN&p=1"
-    fields.extend((_name, _type, _option, _ip, _note, _fill, _stroke, _refs, _image))
+    fields.extend((_name, _type, _option, _ip, _image, _note, _fill, _stroke, _refs, _image))
     
     add_csv_line(file, fields)
     list_containers(network, file)
@@ -72,7 +73,8 @@ def list_containers(network, file):
         _type = "container"
         _option = "-"
         _ip = " ".join(_container[_name]['IP'])
-        _note = "".join(_container[_name]['Image']) + "\\n" + " ".join(_container[_name]['Ports'])
+        _image = _container[_name]['Image']
+        _note = " ".join(_container[_name]['Ports'])
 
         if _container[_name]['Status'] == "running":
             _fill = "#d5e8d4"
@@ -84,7 +86,7 @@ def list_containers(network, file):
         
         _refs = ",".join(_container[_name]['Network'])
         _image = "https://send.papamica.fr/f.php?h=36z5CCnq&p=1"
-        fields.extend((_name, _type, _option, _ip, _note, _fill, _stroke, _refs, _image))
+        fields.extend((_name, _type, _option, _ip, _image, _note, _fill, _stroke, _refs, _image))
         add_csv_line(file, fields)
 
 def list_all(file):
