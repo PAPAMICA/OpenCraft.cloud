@@ -57,7 +57,7 @@ def add_csv_line(file, fields):
         writer.writerow(fields)
 
 def delete_duplicate_line(file):
-    with open('file', 'r') as in_file, open('export.csv', 'w') as out_file:
+    with open(file, 'r') as in_file, open('export.csv', 'w') as out_file:
         seen = set() # set for fast O(1) amortized lookup
         for line in in_file:
             if line in seen: continue # skip duplicate
