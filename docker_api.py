@@ -139,6 +139,7 @@ def get_network_informations(network):
     data = {'network': network}
     data['Subnet'] = subnet
     data['Stack'] = stack
+    data['Driver'] = driver
     data['Containers'] = containers
     
 
