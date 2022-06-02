@@ -90,6 +90,7 @@ def list_all(file):
         _networks.remove(blacklist)
     for _network in _networks:
         list_network(_network, file)
+    list_containers("", file)
 
 if args.container:
     print(docker.get_container_informations(args.container))
