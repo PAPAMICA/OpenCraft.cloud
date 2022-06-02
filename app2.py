@@ -60,7 +60,7 @@ def list_containers(network, file):
         containers =  _network[network]['Containers']
     else:
         containers = docker.get_containers_list()
-
+        print(containers)
     for container in containers:
         _container = docker.get_container_informations(container['Container'])
 
