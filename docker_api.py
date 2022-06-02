@@ -67,8 +67,8 @@ def get_container_informations(container):
     image = c.attrs['Config']['Image']
             
     # IPadress
+    ipadress = list()
     for _network in network:
-        ipadress = list()
         ipadress.append(c.attrs['NetworkSettings']['Networks'][_network]['IPAddress'])
 
     data = {'container': container}
