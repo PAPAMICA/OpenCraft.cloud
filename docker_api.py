@@ -52,9 +52,7 @@ def get_container_informations(container):
     else:
         network = list()
         for n in c.attrs['NetworkSettings']['Networks']:
-            print(n)
-        #network.append(c.attrs['NetworkSettings']['Networks'])
-        #print(network)
+            network.append(n)
         
     # Ports
     if str(c.attrs['HostConfig']).find("PortBindings") == -1:
