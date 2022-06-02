@@ -81,12 +81,12 @@ def list_network(network):
         print(_container)
         file = 'test2.csv'
         fields = list()
-        _name = _container[container['Container']]['container']
+        _name = container['Container']
         _type = "container"
-        _ip = _container['IP']
+        _ip = _container[_name]['IP']
         _fill = "#dae8fc"
         _stroke = "#6c8ebf"
-        _refs = _container['Network']
+        _refs = _container[_name]['Network']
         _image = "https://send.papamica.fr/f.php?h=36z5CCnq&p=1"
         fields.extend((_name, _type, _ip, _fill, _stroke, _refs, _image))
         add_csv_line(file, fields)
