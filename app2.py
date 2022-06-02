@@ -44,7 +44,7 @@ def list_network(network, file):
     _type = "network"
     _option = ""
     _ip = _network[network]['Subnet']
-    _note = "TEST"
+    _note = "TEST\nCoucou"
     _fill = "#dae8fc"
     _stroke = "#6c8ebf"
     _refs = _network[network]['Driver']
@@ -73,7 +73,7 @@ def list_containers(network, file):
         _type = "container"
         _option = "-"
         _ip = " ".join(_container[_name]['IP'])
-        _note = "Port: 1234/TCP"
+        _note = " ".join(_container[_name]['Image']) + "\n" + " ".join(_container[_name]['Ports'])
 
         if _container[_name]['Status'] == "running":
             _fill = "#d5e8d4"
