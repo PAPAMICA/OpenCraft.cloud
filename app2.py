@@ -15,43 +15,6 @@ args = parser.parse_args()
 
 blacklist_networks = ["bridge","host","none"]
 
-graph_attr = {
-    "layout": "dot",
-    "concentrate":"true",
-    "splines":"lines",
-    "len":"4",
-}
-
-cluster_attr = {
-    "layout": "fdp",
-}
-tag_attr = {
-    "center": "true",
-    "layout": "fdp",
-    "imagepos": "mc"
-}
-edge_attr = {
-    "len":"4",
-}
-
-
-
-def create_diagram():
-    with Diagram("\nDocker infrastructure", show=False, direction="TB", graph_attr=graph_attr, node_attr=tag_attr,edge_attr=edge_attr) as diag:
-        img_network = Custom(f"{args.network}\nSubnet: {_network[args.network]['Subnet']}", "./img/internet.png")
-        with Custom(f"Subnet: {_network[args.network]['Subnet']}", "./img/network.png", direction="LR") as containers_subnet:
-            containers = []
-            for container in _network[args.network]['Containers']:
-                img_container = Custom(
-                    f"{container['Container']}\n IP : {container['IPv4']}", "./img/container.png")
-                
-                containers.append(img_container)
-
-            
-        img_network >> containers_subnet
-
-       
-    diag
 
 def add_csv_line(file, fields):
     with open(file, 'a', newline='') as f:
@@ -89,8 +52,16 @@ def list_network(network, file):
     fields.extend((_name, _type, _option, _ip, _note, _fill, _stroke, _refs, _image))
     
     add_csv_line(file, fields)
+    list_containers(network, file)
 
-    for container in _network[network]['Containers']:
+def list_containers(network, file):
+    if network != "":
+        _network = docker.get_network_informations(network)
+        containers =  _network[network]['Containers']
+    else:
+        containers = docker.get_containers_list()
+
+    for container in containers:
         _container = docker.get_container_informations(container['Container'])
 
         fields = list()
@@ -123,7 +94,9 @@ def list_all(file):
 if args.container:
     print(docker.get_container_informations(args.container))
 elif args.network:
-    list_network(args.network)
+    file = 'test2.csv'
+    list_network(args.network, file)
+    delete_duplicate_line(file)
 else:
     file = 'test2.csv'
     list_all(file)
