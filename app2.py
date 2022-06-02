@@ -83,10 +83,10 @@ def list_network(network):
         fields = list()
         _name = container['Container']
         _type = "container"
-        _ip = str(_container[_name]['IP'])
+        _ip = ", ".join(_container[_name]['IP'])
         _fill = "#dae8fc"
         _stroke = "#6c8ebf"
-        _refs = str(_container[_name]['Network'])
+        _refs = ", ".join(_container[_name]['Network'])
         _image = "https://send.papamica.fr/f.php?h=36z5CCnq&p=1"
         fields.extend((_name, _type, _ip, _fill, _stroke, _refs, _image))
         add_csv_line(file, fields)
