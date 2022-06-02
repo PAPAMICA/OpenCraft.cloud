@@ -77,11 +77,11 @@ def list_network(network, file):
     fields = list()
     _name = network
     _type = "network"
-    _option = _network[network]['Driver']
+    _option = ""
     _ip = _network[network]['Subnet']
     _fill = "#f8cecc"
     _stroke = "#b85450"
-    _refs = "-"
+    _refs = _network[network]['Driver']
     _image = "https://send.papamica.fr/f.php?h=0f3ZrzyN&p=1"
     fields.extend((_name, _type, _option, _ip, _fill, _stroke, _refs, _image))
     

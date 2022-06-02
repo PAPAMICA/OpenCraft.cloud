@@ -6,6 +6,7 @@
 # style: label;image=%image%;whiteSpace=wrap;html=1;rounded=1;fillColor=%fill%;strokeColor=%stroke%;
 # namespace: csvimport-
 # connect: {"from":"refs", "to":"name", "invert":true, "style": "curved=0;endArrow=blockThin;endFill=1;fontSize=11;edgeStyle=orthogonalEdgeStyle;"}
+# connect: {"from":"refs", "to":"option", "invert":true, "style": "curved=0;endArrow=blockThin;endFill=1;fontSize=11;edgeStyle=orthogonalEdgeStyle;"}
 # width: auto
 # height: auto
 # padding: -12
@@ -17,3 +18,5 @@
 ## CSV starts under this line
 ## ---- CSV below this line. First line are column names. ----
 name,type,option,ip,fill,stroke,refs,image
+Internet,internet,host,,#f8cecc,#b85450,-,https://send.papamica.fr/f.php?h=0_HP4teW&p=1
+Server,server,bridge,,#f8cecc,#b85450,internet,https://send.papamica.fr/f.php?h=2cwrA9Fi&p=1
