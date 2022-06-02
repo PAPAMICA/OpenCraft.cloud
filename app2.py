@@ -44,7 +44,7 @@ def list_network(network, file):
     _type = "network"
     _option = ""
     _ip = _network[network]['Subnet']
-    _note = "TEST\nCoucou"
+    _note = "TEST\\nCoucou"
     _fill = "#dae8fc"
     _stroke = "#6c8ebf"
     _refs = _network[network]['Driver']
@@ -60,7 +60,6 @@ def list_containers(network, file):
         containers =  _network[network]['Containers']
     else:
         containers = docker.get_containers_list()
-        print(containers)
     for container in containers:
         if network != "":
             _container = docker.get_container_informations(container['Container'])
@@ -73,7 +72,7 @@ def list_containers(network, file):
         _type = "container"
         _option = "-"
         _ip = " ".join(_container[_name]['IP'])
-        _note = " ".join(_container[_name]['Image']) + "\n" + " ".join(_container[_name]['Ports'])
+        _note = "".join(_container[_name]['Image']) + "\\n" + " ".join(_container[_name]['Ports'])
 
         if _container[_name]['Status'] == "running":
             _fill = "#d5e8d4"
