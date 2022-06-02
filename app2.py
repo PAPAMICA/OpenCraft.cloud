@@ -68,7 +68,7 @@ def create_csv():
         _ip = container['IPv4']
         _fill = "#dae8fc"
         _stroke = "#6c8ebf"
-        _refs = args.network, "network"
+        _refs = args.network
         _image = "https://send.papamica.fr/f.php?h=36z5CCnq&p=1"
         fields.extend((_name, _type, _ip, _fill, _stroke, _refs, _image))
         add_csv_line(file, fields)
