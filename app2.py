@@ -92,7 +92,7 @@ def list_network(network):
 def list_all():
     _networks = docker.get_networks_list()
     for _network in _networks:
-        print(_network)
+        list_network(_network)
 
 if args.container:
     print(docker.get_container_informations(args.container))
