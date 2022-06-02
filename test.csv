@@ -1,0 +1,27 @@
+## Name or JSON of layout. Possible values are auto, none, verticaltree, horizontaltree,
+## verticalflow, horizontalflow, organic, circle or a JSON string as used in Layout, Apply.
+## Default is auto.
+## Hello World
+# label: %name%<br><i style="color:gray;">%ip%</i>
+# style: label;image=%image%;whiteSpace=wrap;html=1;rounded=1;fillColor=%fill%;strokeColor=%stroke%;
+# namespace: csvimport-
+# connect: {"from":"refs", "to":"name", "invert":true, "style": "curved=0;endArrow=blockThin;endFill=1;fontSize=11;edgeStyle=orthogonalEdgeStyle;"}
+# width: auto
+# height: auto
+# padding: -12
+# ignore: id,shape,fill,stroke,refs
+# nodespacing: 40
+## levelspacing: 100
+# edgespacing: 40
+# layout: auto
+## CSV starts under this line
+## ---- CSV below this line. First line are column names. ----
+name,type,ip,fill,stroke,refs,image
+proxy,network,10.10.0.1,#f8cecc,#b85450,,https://cdn-icons.flaticon.com/png/512/3080/premium/3080546.png?token=exp=1654118719~hmac=fcf22d33c10d026fad20526fbba16547
+container1,container,10.10.0.2,#dae8fc,#6c8ebf,proxy,https://send.papamica.fr/f.php?h=36z5CCnq&p=1
+container2,container,10.10.0.2,#dae8fc,#6c8ebf,proxy,https://send.papamica.fr/f.php?h=36z5CCnq&p=1
+container3,container,10.10.0.3,#dae8fc,#6c8ebf,proxy,https://send.papamica.fr/f.php?h=36z5CCnq&p=1
+container4,container,10.10.0.4,#dae8fc,#6c8ebf,proxy,https://send.papamica.fr/f.php?h=36z5CCnq&p=1
+container5,container,10.10.0.5,#dae8fc,#6c8ebf,proxy,https://send.papamica.fr/f.php?h=36z5CCnq&p=1
+container6,container,10.10.0.6,#dae8fc,#6c8ebf,proxy,https://send.papamica.fr/f.php?h=36z5CCnq&p=1
+container7,container,10.10.0.7,#dae8fc,#6c8ebf,proxy,https://send.papamica.fr/f.php?h=36z5CCnq&p=1

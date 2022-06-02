@@ -3,6 +3,9 @@
 
 import docker_api as docker
 import argparse
+import json
+import encode
+import csv
 from diagrams import Diagram, Cluster, Node, Edge
 from diagrams.custom import Custom
 
@@ -50,8 +53,14 @@ def create_diagram():
     diag
 
 
+def create_csv():
+    fields = list()
+    fields.extend((args.network, "network", _network[args.network]['Subnet'], "#f8cecc","#b85450","-","https://cdn-icons.flaticon.com/png/512/3080/premium/3080546.png?token=exp=1654118719~hmac=fcf22d33c10d026fad20526fbba16547"))
+    print(fields)
+    # for container in _network[args.network]['Containers']:
+
 if args.container:
     print(docker.get_container_informations(args.container))
 elif args.network:
     _network = docker.get_network_informations(args.network)
-    create_diagram()
+    create_csv()
