@@ -78,7 +78,7 @@ def list_network(network):
 
     for container in _network[network]['Containers']:
         _container = docker.get_container_informations(container)
-        #print(_container)
+        print(_container)
         file = 'test2.csv'
         fields = list()
         _name = _container['container']
