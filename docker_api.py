@@ -50,7 +50,7 @@ def get_container_informations(container):
     if str(c.attrs['HostConfig']).find("NetworkMode") == -1:
         network = None
     else:
-        network = c.attrs['HostConfig']['NetworkMode']
+        network = c.attrs['NetworkSettings']['Networks']
         
     # Ports
     if str(c.attrs['HostConfig']).find("PortBindings") == -1:
