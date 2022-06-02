@@ -6,6 +6,7 @@ import json
 import argparse
 
 arg_dict = 1
+arg_json = 0
 
 
 client = docker.from_env()
