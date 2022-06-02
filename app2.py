@@ -4,6 +4,7 @@
 import docker_api as docker
 import argparse
 import csv
+import pandas as pd
 from diagrams import Diagram, Cluster, Node, Edge
 from diagrams.custom import Custom
 
@@ -55,7 +56,12 @@ def add_csv_line(file, fields):
         writer = csv.writer(f)
         writer.writerow(fields)
 
-def list_network(network):
+def delete_duplicate_line(file):
+    df = pd.read_csv(file)
+    df.drop_duplicates(inplace=True)
+    df.to_csv(file, index=False)
+
+def list_network(network, file):
     _network = docker.get_network_informations(network)
     try:
         _network[network]
@@ -63,7 +69,7 @@ def list_network(network):
         print (f"ERROR: {network} doesn't exist !")
         exit(1)
 
-    file = 'test2.csv'
+    
     fields = list()
     _name = network
     _type = "network"
@@ -91,14 +97,16 @@ def list_network(network):
         fields.extend((_name, _type, _ip, _fill, _stroke, _refs, _image))
         add_csv_line(file, fields)
 
-def list_all():
+def list_all(file):
     _networks = docker.get_networks_list()
     for _network in _networks:
-        list_network(_network)
+        list_network(_network, file)
 
 if args.container:
     print(docker.get_container_informations(args.container))
 elif args.network:
     list_network(args.network)
 else:
-    list_all()
+    file = 'test2.csv'
+    list_all(file)
+    delete_duplicate_line(file)
