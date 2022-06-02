@@ -30,7 +30,7 @@ def get_container_informations(container):
         c = client.containers.get(container)
     except:
         return (f"ERROR: {container} doesn't exist !")
-    print(c.attrs)
+    #print(c.attrs)
     # Status
     status = c.attrs['State']['Status']
 
