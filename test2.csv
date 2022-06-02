@@ -18,5 +18,5 @@
 ## CSV starts under this line
 ## ---- CSV below this line. First line are column names. ----
 name,type,option,ip,fill,stroke,refs,image
-Internet,internet,host,,#f8cecc,#b85450,-,https://send.papamica.fr/f.php?h=0_HP4teW&p=1
+Internet,internet,host,,#f8cecc,#b85450,,https://send.papamica.fr/f.php?h=0_HP4teW&p=1
 Server,server,bridge,,#f8cecc,#b85450,Internet,https://send.papamica.fr/f.php?h=2cwrA9Fi&p=1
