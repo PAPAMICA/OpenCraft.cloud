@@ -62,7 +62,10 @@ def list_containers(network, file):
         containers = docker.get_containers_list()
         print(containers)
     for container in containers:
-        _container = docker.get_container_informations(container['Container'])
+        if network != "":
+            _container = docker.get_container_informations(container['Container'])
+        else:
+             _container = docker.get_container_informations(container)
 
         fields = list()
         _name = container['Container']
