@@ -16,4 +16,4 @@
 # layout: auto
 ## CSV starts under this line
 ## ---- CSV below this line. First line are column names. ----
-name,type,ip,fill,stroke,refs,image
+name,type,option,ip,fill,stroke,refs,image
