@@ -57,7 +57,6 @@ def add_csv_line(file, fields):
 
 def list_network(network):
     _network = docker.get_network_informations(network)
-    print(_network)
     try:
         _network[network]
     except:
@@ -79,7 +78,7 @@ def list_network(network):
 
     for container in _network[network]['Containers']:
         _container = docker.get_container_informations(container)
-        print(_container)
+        #print(_container)
         file = 'test2.csv'
         fields = list()
         _name = container['Container']
