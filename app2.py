@@ -71,12 +71,14 @@ def list_network(network):
     _fill = "#f8cecc"
     _stroke = "#b85450"
     _refs = "-"
-    _image = "https://cdn-icons.flaticon.com/png/512/3080/premium/3080546.png?token=exp=1654118719~hmac=fcf22d33c10d026fad20526fbba16547"
+    _image = "https://send.papamica.fr/f.php?h=0f3ZrzyN&p=1"
     fields.extend((_name, _type, _ip, _fill, _stroke, _refs, _image))
     
     add_csv_line(file, fields)
 
     for container in _network[network]['Containers']:
+        _container = docker.get_container_informations(container)
+        print(_container)
         file = 'test2.csv'
         fields = list()
         _name = container['Container']
