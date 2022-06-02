@@ -50,7 +50,7 @@ def create_diagram():
        
     diag
 
-def add_csv_line(file, fields)
+def add_csv_line(file, fields):
     with open(file, 'a', newline='') as f:
         writer = csv.writer(f)
         writer.writerow(fields)
