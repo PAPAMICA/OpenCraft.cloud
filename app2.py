@@ -57,9 +57,16 @@ def add_csv_line(file, fields):
         writer.writerow(fields)
 
 def delete_duplicate_line(file):
-    df = pd.read_csv(file)
-    df.drop_duplicates(inplace=True)
-    df.to_csv(file, index=False)
+    with open(file, 'rb') as fin, open(file, 'wb') as fout:
+        reader = csv.reader(fin)
+        writer = csv.writer(fout)
+        d = {}
+        for row in reader:
+            color = row[0]
+            if color not in d:
+                d[color] = row  
+                writer.writerow(row)
+   
 
 def list_network(network, file):
     _network = docker.get_network_informations(network)
