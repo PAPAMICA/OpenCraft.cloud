@@ -60,7 +60,6 @@ def list_containers(network, file):
         containers =  _network[network]['Containers']
     else:
         containers = docker.get_containers_list()
-        print(containers)
     for container in containers:
         if network != "":
             _container = docker.get_container_informations(container['Container'])
@@ -75,6 +74,7 @@ def list_containers(network, file):
             _refs = ",".join(_container[_name]['Network'])
         else:
             _container = docker.get_container_informations(container)
+            print(_container)
             _name = container
             _ip = " ".join(_container['IP'])
             if _container['Status'] == "running":
