@@ -57,6 +57,12 @@ def add_csv_line(file, fields):
 
 def list_network(network):
     _network = docker.get_network_informations(network)
+    try:
+        _network[network]
+    except:
+        print (f"ERROR: {network} doesn't exist !")
+        exit(1)
+
     file = 'test2.csv'
     fields = list()
     fields.extend((network, "network", _network[network]['Subnet'], "#f8cecc","#b85450","-","https://cdn-icons.flaticon.com/png/512/3080/premium/3080546.png?token=exp=1654118719~hmac=fcf22d33c10d026fad20526fbba16547"))
