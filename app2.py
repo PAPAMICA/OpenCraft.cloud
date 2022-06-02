@@ -57,6 +57,7 @@ def add_csv_line(file, fields):
 
 def list_network(network):
     _network = docker.get_network_informations(network)
+    print(_network)
     try:
         _network[network]
     except:
