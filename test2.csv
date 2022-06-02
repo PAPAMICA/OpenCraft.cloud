@@ -2,7 +2,7 @@
 ## verticalflow, horizontalflow, organic, circle or a JSON string as used in Layout, Apply.
 ## Default is auto.
 ## Hello World
-# label: %name%<br><i style="color:gray;">%ip%</i><br><i style="color:gray;">%image%</i><br><i style="color:gray;">%note%</i>
+# label: %name%<br><i style="color:gray;">%ip%</i><br><i style="color:gray;">%base%</i><br><i style="color:gray;">%note%</i>
 # style: label;image=%image%;whiteSpace=wrap;html=1;rounded=1;fillColor=%fill%;strokeColor=%stroke%;
 # namespace: csvimport-
 # connect: {"from":"refs", "to":"name", "invert":true, "style": "curved=0;endArrow=blockThin;endFill=1;fontSize=11;edgeStyle=orthogonalEdgeStyle;"}
@@ -17,6 +17,6 @@
 # layout: auto
 ## CSV starts under this line
 ## ---- CSV below this line. First line are column names. ----
-name,type,option,ip,image,note,fill,stroke,refs,img
+name,type,option,ip,base,note,fill,stroke,refs,image
 Internet,internet,host,,,,#e1d5e7,#9673a6,,https://send.papamica.fr/f.php?h=0_HP4teW&p=1
 Server,server,bridge,,,,#e1d5e7,#9673a6,Internet,https://send.papamica.fr/f.php?h=2cwrA9Fi&p=1
