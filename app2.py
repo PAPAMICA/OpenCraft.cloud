@@ -65,8 +65,17 @@ def list_network(network):
 
     file = 'test2.csv'
     fields = list()
-    fields.extend((network, "network", _network[network]['Subnet'], "#f8cecc","#b85450","-","https://cdn-icons.flaticon.com/png/512/3080/premium/3080546.png?token=exp=1654118719~hmac=fcf22d33c10d026fad20526fbba16547"))
+    _name = network
+    _type = "network"
+    _ip = _network[network]['Subnet']
+    _fill = "#f8cecc"
+    _stroke = "#b85450"
+    _refs = "-"
+    _image = "https://cdn-icons.flaticon.com/png/512/3080/premium/3080546.png?token=exp=1654118719~hmac=fcf22d33c10d026fad20526fbba16547"
+    fields.extend((_name, _type, _ip, _fill, _stroke, _refs, _image))
+    
     add_csv_line(file, fields)
+
     for container in _network[network]['Containers']:
         file = 'test2.csv'
         fields = list()
@@ -80,7 +89,14 @@ def list_network(network):
         fields.extend((_name, _type, _ip, _fill, _stroke, _refs, _image))
         add_csv_line(file, fields)
 
+def list_all():
+    _networks = docker.get_networks_list()
+    for _network in _networks:
+        print(_network)
+
 if args.container:
     print(docker.get_container_informations(args.container))
 elif args.network:
     list_network(args.network)
+else:
+    list_all()
