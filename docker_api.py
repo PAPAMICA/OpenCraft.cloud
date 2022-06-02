@@ -50,7 +50,8 @@ def get_container_informations(container):
     if str(c.attrs['HostConfig']).find("NetworkMode") == -1:
         network = None
     else:
-        network = c.attrs['NetworkSettings']['Networks']
+        network = list()
+        network.append(c.attrs['NetworkSettings']['Networks'])
         
     # Ports
     if str(c.attrs['HostConfig']).find("PortBindings") == -1:
@@ -66,7 +67,8 @@ def get_container_informations(container):
             
     # IPadress
     for _network in network:
-        ipadress = c.attrs['NetworkSettings']['Networks'][_network]['IPAddress']
+        ipadress = list()
+        ipadress.append(c.attrs['NetworkSettings']['Networks'][_network]['IPAddress'])
 
     data = {'container': container}
     data['Status'] = status
