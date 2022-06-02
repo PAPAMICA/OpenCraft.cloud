@@ -73,7 +73,7 @@ def list_network(network, file):
     except:
         print (f"ERROR: {network} doesn't exist !")
         exit(1)
-    _network[network]
+    print (_network[network])
     
     fields = list()
     _name = network
