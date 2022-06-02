@@ -17,6 +17,6 @@
 # layout: auto
 ## CSV starts under this line
 ## ---- CSV below this line. First line are column names. ----
-name,type,option,ip,image,note,fill,stroke,refs,icon
+name,type,option,ip,image,note,fill,stroke,refs,img
 Internet,internet,host,,,,#e1d5e7,#9673a6,,https://send.papamica.fr/f.php?h=0_HP4teW&p=1
 Server,server,bridge,,,,#e1d5e7,#9673a6,Internet,https://send.papamica.fr/f.php?h=2cwrA9Fi&p=1
