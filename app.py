@@ -7,6 +7,8 @@ from diagrams import Diagram, Cluster
 from diagrams.custom import Custom
 import argparse
 from os.path import exists
+import shutil, os
+import glob
 
 parser = argparse.ArgumentParser(description='Create a graph of your OpenStack project.')
 parser.add_argument("--openrc", required=True, help='Link to your openrc file.')
@@ -29,7 +31,7 @@ tag_attr = {
 edge_attr = {
     "minlen":"2",
 }
-with Diagram("\nInfrastructure", show=True, direction="TB", graph_attr=graph_attr, node_attr=tag_attr,edge_attr=edge_attr) as diag:
+with Diagram("\nInfrastructure", show=False, direction="TB", graph_attr=graph_attr, node_attr=tag_attr,edge_attr=edge_attr) as diag:
     for router in routers:
         networkwan = routers[router]['network_wan']
         img_router = Custom(
@@ -94,4 +96,8 @@ with Diagram("\nInfrastructure", show=True, direction="TB", graph_attr=graph_att
     if instances_net:
         img_network_wan = Custom(f"ext-net1", "./img/internet.png")
         img_network_wan >> instances_net
+
 diag
+png_files = glob.glob("/app/" + "*.png")
+for file in png_files:
+    shutil.move(file, "/app/results/")

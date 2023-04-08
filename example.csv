@@ -1,8 +1,0 @@
-name,type,option,ip,base,note,fill,stroke,refs,image
-Internet,internet,host,,,,#e1d5e7,#9673a6,,https://send.papamica.fr/f.php?h=0_HP4teW&p=1
-Server,server,bridge,,,,#e1d5e7,#9673a6,Internet,https://send.papamica.fr/f.php?h=2cwrA9Fi&p=1
-portainer_agent_default,network,,172.21.0.0/16,,,#dae8fc,#6c8ebf,bridge,https://send.papamica.fr/f.php?h=0f3ZrzyN&p=1
-portainer_agent,container,-,172.21.0.2,portainer/agent,9001/tcp,#d5e8d4,#82b366,portainer_agent_default,https://send.papamica.fr/f.php?h=36z5CCnq&p=1
-proxy,network,,172.22.0.0/16,,,#dae8fc,#6c8ebf,bridge,https://send.papamica.fr/f.php?h=0f3ZrzyN&p=1
-domo-kit-com-db,container,-,172.22.0.22,mysql:5.7,,#d5e8d4,#82b366,proxy,https://send.papamica.fr/f.php?h=36z5CCnq&p=1
-sugarandsalt-fr-db,container,-,172.22.0.3,mysql:5.7,,#d5e8d4,#82b366,proxy,https://send.papamica.fr/f.php?h=36z5CCnq&p=1
